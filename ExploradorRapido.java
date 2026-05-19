@@ -1,33 +1,18 @@
-class ExploradorRapido extends Explorador implements Runnable {
-    public ExploradorRapido(String nome, int prioridade, String tarefa) {
-        super(nome, "Rápido", prioridade, tarefa);
+public class ExploradorRapido extends Explorador {
+    public ExploradorRapido(String nome, String tarefa) {
+        super(nome, "Rápido", Thread.MAX_PRIORITY, tarefa);
     }
-
+    
+    @Override
     public void executarTarefa() throws TarefaInvalidaException {
-        if (getTarefa() == null || getTarefa().isEmpty()) {
-            throw new TarefaInvalidaException("Tarefa inválida para " + getNome());
+        System.out.println("Explorador: " + nome + " | Tipo: " + tipo + 
+                         " | Status: Desbravando " + tarefa + " rapidamente.");
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
         }
-        System.out.println(getNome() + " (Rápido) está correndo para: " + getTarefa());
-    }
-
-    public void run() {
-        try { executarTarefa(); } catch (TarefaInvalidaException e) { System.out.println("Erro: " + e.getMessage()); }
-    }
-}
-
-class ExploradorCuidadoso extends Explorador implements Runnable {
-    public ExploradorCuidadoso(String nome, int prioridade, String tarefa) {
-        super(nome, "Cuidadoso", prioridade, tarefa);
-    }
-
-    public void executarTarefa() throws TarefaInvalidaException {
-        if (getTarefa() == null || getTarefa().isEmpty()) {
-            throw new TarefaInvalidaException("Tarefa inválida para " + getNome());
-        }
-        System.out.println(getNome() + " (Cuidadoso) está mapeando com cuidado: " + getTarefa());
-    }
-
-    public void run() {
-        try { executarTarefa(); } catch (TarefaInvalidaException e) { System.out.println("Erro: " + e.getMessage()); }
+        System.out.println("Explorador: " + nome + " | Tipo: " + tipo + 
+                         " | Status: " + tarefa + " completamente explorada(s)");
     }
 }
